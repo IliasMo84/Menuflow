@@ -32,13 +32,16 @@
                         <a class="nav-link dropdown-toggle text-white" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="fa-solid fa-circle-user me-1"></i> {{ Auth::user()->name }}
                         </a>
+
                         <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="userDropdown">
                             <li>
-                                <a class="dropdown-menu-item dropdown-item" href="{{ route('profile.edit') }}">
+                                <a class="dropdown-item" href="{{ route('profile.edit') }}">
                                     <i class="fa-solid fa-user-gear me-2"></i>Mon Profil
                                 </a>
                             </li>
+
                             <li><hr class="dropdown-divider"></li>
+
                             <li>
                                 <form method="POST" action="{{ route('logout') }}">
                                     @csrf
@@ -57,7 +60,7 @@
     <div class="container-fluid">
         <div class="row">
 
-            <!-- Sidebar Latérale -->
+            <!-- Sidebar -->
             <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block bg-white sidebar collapse border-end min-vh-100 p-3">
                 <div class="position-sticky pt-3">
                     <ul class="nav nav-pills flex-column mb-auto">
@@ -81,7 +84,7 @@
                         </li>
 
                         <li class="nav-item mb-1">
-                            <a href="#" class="nav-link text-dark disabled">
+                            <a href="{{ route('products.index') }}" class="nav-link {{ request()->routeIs('products.*') ? 'active' : 'text-dark' }}">
                                 <i class="fa-solid fa-burger me-2"></i> Produits
                             </a>
                         </li>
@@ -105,18 +108,17 @@
             <!-- Contenu Principal -->
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 py-4">
 
-                <!-- Messages d'alerte -->
                 @if(session('success'))
                     <div class="alert alert-success alert-dismissible fade show" role="alert">
                         <i class="fa-solid fa-circle-check me-2"></i>{{ session('success') }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                     </div>
                 @endif
 
                 @if(session('error'))
                     <div class="alert alert-danger alert-dismissible fade show" role="alert">
                         <i class="fa-solid fa-triangle-exclamation me-2"></i>{{ session('error') }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                     </div>
                 @endif
 

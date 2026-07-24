@@ -4,6 +4,12 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RestaurantController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ProductController;
+
+Route::middleware(['auth', 'verified'])->group(function () {
+    // ... autres routes
+    Route::resource('products', ProductController::class);
+});
 
 Route::middleware(['auth', 'verified'])->group(function () {
     // ... routes précédentes (dashboard, restaurant)
