@@ -1,56 +1,95 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RestaurantController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\TableController;
+use App\Http\Controllers\PublicMenuController;
 
-Route::middleware(['auth', 'verified'])->group(function () {
-    // ... autres routes
-    Route::resource('tables', TableController::class)->only(['index', 'store', 'destroy']);
-});
-
-// Route publique temporaire pour tester les QR Codes (Étape suivante)
-Route::get('/menu/{slug}', function ($slug) {
-    return "Menu public du restaurant : " . e($slug) . " (Table : " . request('table', 'Non spécifiée') . ")";
-})->name('public.menu');
-
-Route::middleware(['auth', 'verified'])->group(function () {
-    // ... autres routes
-    Route::resource('products', ProductController::class);
-});
-
-Route::middleware(['auth', 'verified'])->group(function () {
-    // ... routes précédentes (dashboard, restaurant)
-
-    // Routes de gestion des catégories
-    Route::resource('categories', CategoryController::class)->except(['create', 'show', 'edit']);
-});
-
-Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
-
-    // Routes du restaurant
-    Route::get('/restaurant', [RestaurantController::class, 'index'])->name('restaurant.index');
-    Route::post('/restaurant', [RestaurantController::class, 'store'])->name('restaurant.store');
-});
+/*
+|--------------------------------------------------------------------------
+| Route publique
+|--------------------------------------------------------------------------
+*/
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Menu numérique public (accessible sans connexion)
+Route::get('/menu/{slug}', [PublicMenuController::class, 'show'])
+    ->name('public.menu');
 
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+/*
+|--------------------------------------------------------------------------
+| Routes protégées (authentification)
+|--------------------------------------------------------------------------
+*/
+
+Route::middleware(['auth', 'verified'])->group(function () {
+
+    // Dashboard
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
+
+    /*
+    |--------------------------------------------------------------------------
+    | Restaurant
+    |--------------------------------------------------------------------------
+    */
+
+    Route::get('/restaurant', [RestaurantController::class, 'index'])
+        ->name('restaurant.index');
+
+    Route::post('/restaurant', [RestaurantController::class, 'store'])
+        ->name('restaurant.store');
+
+    /*
+    |--------------------------------------------------------------------------
+    | Catégories
+    |--------------------------------------------------------------------------
+    */
+
+    Route::resource('categories', CategoryController::class)
+        ->except(['create', 'show', 'edit']);
+
+    /*
+    |--------------------------------------------------------------------------
+    | Produits
+    |--------------------------------------------------------------------------
+    */
+
+    Route::resource('products', ProductController::class);
+
+    /*
+    |--------------------------------------------------------------------------
+    | Tables & QR Codes
+    |--------------------------------------------------------------------------
+    */
+
+    Route::resource('tables', TableController::class)
+        ->only(['index', 'store', 'destroy']);
 });
 
-require __DIR__.'/auth.php';
+/*
+|--------------------------------------------------------------------------
+| Profil utilisateur
+|--------------------------------------------------------------------------
+*/
+
+Route::middleware('auth')->group(function () {
+
+    Route::get('/profile', [ProfileController::class, 'edit'])
+        ->name('profile.edit');
+
+    Route::patch('/profile', [ProfileController::class, 'update'])
+        ->name('profile.update');
+
+    Route::delete('/profile', [ProfileController::class, 'destroy'])
+        ->name('profile.destroy');
+});
+
+require __DIR__ . '/auth.php';
