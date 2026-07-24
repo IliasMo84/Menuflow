@@ -9,6 +9,9 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 
 
+
+
+
 class Restaurant extends Model
 {
     use HasFactory;
@@ -35,5 +38,10 @@ class Restaurant extends Model
 public function categories(): HasMany
 {
     return $this->hasMany(Category::class)->orderBy('sort_order', 'asc');
+}
+
+public function tables(): HasMany
+{
+    return $this->hasMany(Table::class);
 }
 }

@@ -5,6 +5,17 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RestaurantController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\TableController;
+
+Route::middleware(['auth', 'verified'])->group(function () {
+    // ... autres routes
+    Route::resource('tables', TableController::class)->only(['index', 'store', 'destroy']);
+});
+
+// Route publique temporaire pour tester les QR Codes (Étape suivante)
+Route::get('/menu/{slug}', function ($slug) {
+    return "Menu public du restaurant : " . e($slug) . " (Table : " . request('table', 'Non spécifiée') . ")";
+})->name('public.menu');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     // ... autres routes

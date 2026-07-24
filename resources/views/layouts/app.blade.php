@@ -7,33 +7,34 @@
 
     <title>{{ config('app.name', 'MenuFlow') }} - Admin</title>
 
-    <!-- FontAwesome icons -->
+    <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-    <!-- Vite Assets (Bootstrap & Custom CSS/JS) -->
+    <!-- Vite -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
 <body class="bg-light">
 
-    <!-- Navbar Supérieure -->
+    <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top shadow-sm">
         <div class="container-fluid">
             <a class="navbar-brand fw-bold text-warning fs-4" href="{{ route('dashboard') }}">
                 <i class="fa-solid fa-utensils me-2"></i>MenuFlow
             </a>
 
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#topnav" aria-controls="topnav" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#topnav">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
             <div class="collapse navbar-collapse" id="topnav">
-                <ul class="navbar-fluid navbar-nav ms-auto align-items-center">
+                <ul class="navbar-nav ms-auto align-items-center">
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle text-white" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="fa-solid fa-circle-user me-1"></i> {{ Auth::user()->name }}
+                        <a class="nav-link dropdown-toggle text-white" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
+                            <i class="fa-solid fa-circle-user me-1"></i>
+                            {{ Auth::user()->name }}
                         </a>
 
-                        <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="userDropdown">
+                        <ul class="dropdown-menu dropdown-menu-end shadow">
                             <li>
                                 <a class="dropdown-item" href="{{ route('profile.edit') }}">
                                     <i class="fa-solid fa-user-gear me-2"></i>Mon Profil
@@ -66,38 +67,49 @@
                     <ul class="nav nav-pills flex-column mb-auto">
 
                         <li class="nav-item mb-1">
-                            <a href="{{ route('dashboard') }}" class="nav-link {{ request()->routeIs('dashboard') ? 'active' : 'text-dark' }}">
-                                <i class="fa-solid fa-chart-line me-2"></i> Tableaux de bord
+                            <a href="{{ route('dashboard') }}"
+                               class="nav-link {{ request()->routeIs('dashboard') ? 'active' : 'text-dark' }}">
+                                <i class="fa-solid fa-chart-line me-2"></i>
+                                Tableaux de bord
                             </a>
                         </li>
 
                         <li class="nav-item mb-1">
-                            <a href="{{ route('restaurant.index') }}" class="nav-link {{ request()->routeIs('restaurant.*') ? 'active' : 'text-dark' }}">
-                                <i class="fa-solid fa-store me-2"></i> Mon Restaurant
+                            <a href="{{ route('restaurant.index') }}"
+                               class="nav-link {{ request()->routeIs('restaurant.*') ? 'active' : 'text-dark' }}">
+                                <i class="fa-solid fa-store me-2"></i>
+                                Mon Restaurant
                             </a>
                         </li>
 
                         <li class="nav-item mb-1">
-                            <a href="{{ route('categories.index') }}" class="nav-link {{ request()->routeIs('categories.*') ? 'active' : 'text-dark' }}">
-                                <i class="fa-solid fa-layer-group me-2"></i> Catégories
+                            <a href="{{ route('categories.index') }}"
+                               class="nav-link {{ request()->routeIs('categories.*') ? 'active' : 'text-dark' }}">
+                                <i class="fa-solid fa-layer-group me-2"></i>
+                                Catégories
                             </a>
                         </li>
 
                         <li class="nav-item mb-1">
-                            <a href="{{ route('products.index') }}" class="nav-link {{ request()->routeIs('products.*') ? 'active' : 'text-dark' }}">
-                                <i class="fa-solid fa-burger me-2"></i> Produits
+                            <a href="{{ route('products.index') }}"
+                               class="nav-link {{ request()->routeIs('products.*') ? 'active' : 'text-dark' }}">
+                                <i class="fa-solid fa-burger me-2"></i>
+                                Produits
+                            </a>
+                        </li>
+
+                        <li class="nav-item mb-1">
+                            <a href="{{ route('tables.index') }}"
+                               class="nav-link {{ request()->routeIs('tables.*') ? 'active' : 'text-dark' }}">
+                                <i class="fa-solid fa-qrcode me-2"></i>
+                                Tables & QR Codes
                             </a>
                         </li>
 
                         <li class="nav-item mb-1">
                             <a href="#" class="nav-link text-dark disabled">
-                                <i class="fa-solid fa-chair me-2"></i> Tables & QR Codes
-                            </a>
-                        </li>
-
-                        <li class="nav-item mb-1">
-                            <a href="#" class="nav-link text-dark disabled">
-                                <i class="fa-solid fa-receipt me-2"></i> Commandes
+                                <i class="fa-solid fa-receipt me-2"></i>
+                                Commandes
                             </a>
                         </li>
 
@@ -105,19 +117,21 @@
                 </div>
             </nav>
 
-            <!-- Contenu Principal -->
+            <!-- Contenu principal -->
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 py-4">
 
                 @if(session('success'))
                     <div class="alert alert-success alert-dismissible fade show" role="alert">
-                        <i class="fa-solid fa-circle-check me-2"></i>{{ session('success') }}
+                        <i class="fa-solid fa-circle-check me-2"></i>
+                        {{ session('success') }}
                         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                     </div>
                 @endif
 
                 @if(session('error'))
                     <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                        <i class="fa-solid fa-triangle-exclamation me-2"></i>{{ session('error') }}
+                        <i class="fa-solid fa-triangle-exclamation me-2"></i>
+                        {{ session('error') }}
                         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                     </div>
                 @endif
