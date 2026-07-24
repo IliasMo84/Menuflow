@@ -33,7 +33,11 @@
                             <i class="fa-solid fa-circle-user me-1"></i> {{ Auth::user()->name }}
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="userDropdown">
-                            <li><a class="dropdown-menu-item dropdown-item" href="{{ route('profile.edit') }}"><i class="fa-solid fa-user-gear me-2"></i>Mon Profil</a></li>
+                            <li>
+                                <a class="dropdown-menu-item dropdown-item" href="{{ route('profile.edit') }}">
+                                    <i class="fa-solid fa-user-gear me-2"></i>Mon Profil
+                                </a>
+                            </li>
                             <li><hr class="dropdown-divider"></li>
                             <li>
                                 <form method="POST" action="{{ route('logout') }}">
@@ -52,17 +56,18 @@
 
     <div class="container-fluid">
         <div class="row">
+
             <!-- Sidebar Latérale -->
             <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block bg-white sidebar collapse border-end min-vh-100 p-3">
                 <div class="position-sticky pt-3">
                     <ul class="nav nav-pills flex-column mb-auto">
+
                         <li class="nav-item mb-1">
                             <a href="{{ route('dashboard') }}" class="nav-link {{ request()->routeIs('dashboard') ? 'active' : 'text-dark' }}">
                                 <i class="fa-solid fa-chart-line me-2"></i> Tableaux de bord
                             </a>
                         </li>
 
-                        <!-- Mon Restaurant -->
                         <li class="nav-item mb-1">
                             <a href="{{ route('restaurant.index') }}" class="nav-link {{ request()->routeIs('restaurant.*') ? 'active' : 'text-dark' }}">
                                 <i class="fa-solid fa-store me-2"></i> Mon Restaurant
@@ -70,25 +75,29 @@
                         </li>
 
                         <li class="nav-item mb-1">
-                            <a href="#" class="nav-link text-dark disabled">
+                            <a href="{{ route('categories.index') }}" class="nav-link {{ request()->routeIs('categories.*') ? 'active' : 'text-dark' }}">
                                 <i class="fa-solid fa-layer-group me-2"></i> Catégories
                             </a>
                         </li>
+
                         <li class="nav-item mb-1">
                             <a href="#" class="nav-link text-dark disabled">
                                 <i class="fa-solid fa-burger me-2"></i> Produits
                             </a>
                         </li>
+
                         <li class="nav-item mb-1">
                             <a href="#" class="nav-link text-dark disabled">
                                 <i class="fa-solid fa-chair me-2"></i> Tables & QR Codes
                             </a>
                         </li>
+
                         <li class="nav-item mb-1">
                             <a href="#" class="nav-link text-dark disabled">
                                 <i class="fa-solid fa-receipt me-2"></i> Commandes
                             </a>
                         </li>
+
                     </ul>
                 </div>
             </nav>
@@ -96,7 +105,7 @@
             <!-- Contenu Principal -->
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 py-4">
 
-                <!-- Messages d'alerte (Success / Errors) -->
+                <!-- Messages d'alerte -->
                 @if(session('success'))
                     <div class="alert alert-success alert-dismissible fade show" role="alert">
                         <i class="fa-solid fa-circle-check me-2"></i>{{ session('success') }}
@@ -112,6 +121,7 @@
                 @endif
 
                 @yield('content')
+
             </main>
         </div>
     </div>

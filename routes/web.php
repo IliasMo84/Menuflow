@@ -3,6 +3,14 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RestaurantController;
+use App\Http\Controllers\CategoryController;
+
+Route::middleware(['auth', 'verified'])->group(function () {
+    // ... routes précédentes (dashboard, restaurant)
+
+    // Routes de gestion des catégories
+    Route::resource('categories', CategoryController::class)->except(['create', 'show', 'edit']);
+});
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', function () {
