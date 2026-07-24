@@ -7,9 +7,19 @@ use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+
 
 class User extends Authenticatable
 {
+    /**
+ * Un utilisateur possède un seul restaurant.
+ */
+public function restaurant(): HasOne
+{
+    return $this->hasOne(Restaurant::class);
+}
+
     /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable;
 
