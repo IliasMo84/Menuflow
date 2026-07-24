@@ -7,6 +7,10 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\TableController;
 use App\Http\Controllers\PublicMenuController;
+use App\Http\Controllers\OrderController;
+
+// Envoi de commande depuis le menu public
+Route::post('/orders', [OrderController::class, 'store'])->name('public.orders.store');
 
 /*
 |--------------------------------------------------------------------------
